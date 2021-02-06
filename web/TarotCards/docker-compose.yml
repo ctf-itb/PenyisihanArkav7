@@ -1,0 +1,10 @@
+version: "3"
+
+services:
+  chall:
+    build: ./chall
+    restart: always
+    volumes:
+      - './flag:/a2e3365b6d77fbb3b9f142a6400cc80d:ro'
+    ports:
+      - 10010:5000

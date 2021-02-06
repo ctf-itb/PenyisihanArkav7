@@ -1,0 +1,11 @@
+{% extends "main.html" %}
+{% block content %}
+<div id="box2">
+	<h1>Welcome to Tarot Cards Storage</h1>
+	<div id="content">
+		{% for tarot in storage %}
+		<a href="/{{ tarot }}"><img id="tarot" alt="tarot" src="{{ url_for('static', filename=tarot+'.png') }}"></a>
+		{% endfor %}
+	</div>
+</div>
+{% endblock %}

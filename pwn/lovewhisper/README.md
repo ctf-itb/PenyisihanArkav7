@@ -1,0 +1,10 @@
+# Love Whisper
+## Description
+Can you hear it?
+
+`nc <IP> <PORT>`
+
+Author: Fraglantia
+
+## Flag
+`Arkav7{y0u_c4n_s0ftly_he4r_th3_wh1sp3rs_of_l0v3}`

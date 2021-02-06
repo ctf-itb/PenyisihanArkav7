@@ -1,0 +1,5 @@
+Melepas penat CTF dengan main game dulu
+
+input 'help.' for help
+
+Semua input diakhiri dengan '.'

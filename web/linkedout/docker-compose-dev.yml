@@ -1,0 +1,87 @@
+version: "3"
+
+services:
+    puppeteer:
+        build: ./puppeteer
+        restart: always
+        user: 1000:1000
+        environment:
+            - USER_AGENT=Arkav7/Admin-2d6f1a3dd32afdeefb
+            - BASE_URL=http://website
+            - ADMIN_SECRET=6d74887bdcd3b1ee8643502dc1321762
+        networks:
+            - arkav_linkedout
+    website:
+        build: ./website
+        restart: always
+        expose:
+            - '80'
+        ports:
+            - '16000:80'
+        user: 1000:1000
+        environment: 
+            - DATABASE_NAME=linkedout_web
+            - DATABASE_HOST=mysql_web
+            - DATABASE_USERNAME=arkavidia
+            - DATABASE_PASSWORD=arkavidia
+            - OAUTH_URL=http://localhost:16001/oauth/authorize.php
+            - REDIRECT_URL=http://localhost:16000/auth.php
+            - ADMIN_USERNAME=admin
+            - ADMIN_USER_AGENT=Arkav7/Admin-2d6f1a3dd32afdeefb
+            - ADMIN_SECRET=6d74887bdcd3b1ee8643502dc1321762
+        sysctls:
+            - net.ipv4.ip_unprivileged_port_start=0
+        networks:
+            - arkav_linkedout
+        volumes: 
+            - './website/html/:/var/www/html/'
+    oauth2:
+        build: ./oauth2-provider
+        restart: always
+        expose:
+            - '80'
+        ports:
+            - '16001:80'
+        user: 1000:1000
+        environment: 
+            - DATABASE_NAME=linkedout_oauth2
+            - DATABASE_HOST=mysql_oauth2
+            - DATABASE_USERNAME=arkavidia
+            - DATABASE_PASSWORD=arkavidia
+            - ALLOWED_REDIRECT_URI=http://localhost:16000/auth.php
+            - CLIENT_ID=linkedout
+            - JWT_ISS=http://localhost:16001
+        sysctls:
+            - net.ipv4.ip_unprivileged_port_start=0
+        networks:
+            - arkav_linkedout
+        volumes: 
+            - './oauth2-provider/html/:/var/www/html/'
+    mysql_web:
+        image: mysql:8.0
+        command: --default-authentication-plugin=mysql_native_password
+        restart: always
+        volumes: 
+            - './website/ctf_linkedout_web.sql:/docker-entrypoint-initdb.d/dump.sql'
+        environment:
+            - MYSQL_ROOT_PASSWORD=arkvd7
+            - MYSQL_USER=arkavidia
+            - MYSQL_PASSWORD=arkavidia
+            - MYSQL_DATABASE=linkedout_web
+        networks:
+            - arkav_linkedout
+    mysql_oauth2:
+        image: mysql:8.0
+        command: --default-authentication-plugin=mysql_native_password
+        restart: always
+        volumes: 
+            - './oauth2-provider/ctf_linkedout_oauth.sql:/docker-entrypoint-initdb.d/dump.sql'
+        environment:
+            - MYSQL_ROOT_PASSWORD=arkvd7
+            - MYSQL_USER=arkavidia
+            - MYSQL_PASSWORD=arkavidia
+            - MYSQL_DATABASE=linkedout_oauth2
+        networks:
+            - arkav_linkedout
+networks: 
+    arkav_linkedout:

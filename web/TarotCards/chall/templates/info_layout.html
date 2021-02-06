@@ -1,0 +1,32 @@
+{% extends "main.html" %}
+{% block content %}
+<div id="box1">
+	<div id="imagebox">
+		<img id="tarot" alt="tarot" src="{{ url_for('static', filename=tarot['title']+'.png') }}">
+	</div>
+	<div id="title_box">
+		<h1>{{ tarot["title"] }}</h1>
+		<hr>
+		<div id="inner_box1">
+			<div>
+				<h2>Upright keywords</h2>
+				{% for elm in tarot["upright"] %}
+				<li>{{elm}}</li>
+				{% endfor %}
+			</div>
+			<div>
+				<h2>Reversed keywords</h2>
+				{% for elm in tarot["reversed"] %}
+				<li>{{elm}}</li>
+				{% endfor %}
+			</div>
+		</div>
+	</div>
+</div>
+<div id="box2">
+	<h2>Description</h2>
+	<div id="content">
+		{{ tarot["desc"] }}
+	</div>
+</div>
+{% endblock %}

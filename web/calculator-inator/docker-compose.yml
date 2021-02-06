@@ -1,0 +1,16 @@
+version: "3"
+
+services:
+    php:
+        image: php:7.2-apache
+        restart: always
+        expose:
+            - '80'
+        ports:
+            - '17000:80'
+        volumes:
+            - './web:/var/www/html:ro'
+            - './flag:/.flag:ro'
+        user: 14045:14045
+        sysctls:
+            - net.ipv4.ip_unprivileged_port_start=0

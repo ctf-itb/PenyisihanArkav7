@@ -1,0 +1,20 @@
+<!doctype html>
+<html>
+	<head>
+		<link rel="icon" href="{{ url_for('static', filename='logo.png') }}">
+		<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+		<title>Tarot Cards</title>
+	</head>
+	<body>
+		<div id="menubar">
+			<h1>Tarot Cards Storage</h1>
+		</div>
+		<div id="container">
+			{% block content %}
+			<div id="box2">
+				<h1>%s: Not Found</h1>
+			</div>
+			{% endblock %}
+		</div>
+	</body>
+</html>
